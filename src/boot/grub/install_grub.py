@@ -95,6 +95,28 @@ def download_and_extract(github_url):
                             with z.open(file_info) as source, open(out_file, "wb") as target:
                                 target.write(source.read())
         
+        username = input("your username: ")
+        password = input("your password: ")
+        while True:
+            repeat = input("repeat password: ")
+            if password == repeat:
+                break
+            else:
+                continue
+
+        import json
+        
+        login_data = {
+            "username": username,
+            "password": password
+        }
+        
+        login_file = target_dir / "etc" / "login.json"
+        login_file.parent.mkdir(parents=True, exist_ok=True) 
+        
+        with open(login_file, "w", encoding="utf-8") as f:
+            json.dump(login_data, f, indent=4)
+
         from src.bin.bash.bash import main_bash
         main_bash()
 
